@@ -1,7 +1,12 @@
-const blacklist = ['hollow knight', 'silksong', 'team cherry', 'path of pain', 'hornet'];
+let blacklist = [];
+
+blacklist = JSON.parse(localStorage.getItem('blacklist'));
+if(!blacklist) {
+    blacklist = ['hollow knight', 'silksong', 'team cherry', 'hornet', 'nail', 'moss mother', 'carmelita', 'lace', 'sharpe', 'seth', 'trobbio', 'last judge', 'bell beast'];
+}
 
 function blockSpoilers(){
-    const elements = document.querySelectorAll(".ytd-rich-item-renderer:not(.ytd-rich-item-renderer .ytd-rich-item-renderer), ytd-video-renderer, ytm-shorts-lockup-view-model-v2");
+    const elements = document.querySelectorAll(".ytd-rich-item-renderer:not(.ytd-rich-item-renderer .ytd-rich-item-renderer), yt-lockup-view-model, ytd-video-renderer, ytm-shorts-lockup-view-model-v2");
 
     const matches = Array.from(elements).filter(el =>
         blacklist.some(kw => el.innerText?.toLowerCase().includes(kw))
@@ -21,8 +26,8 @@ function blockSpoilers(){
             txt.innerHTML = 'SPOILER';
         });
 
-        el.style.border = '1px yellow solid';
-        el.style.borderRadius = '12px';
+        //el.style.border = '1px yellow solid';
+        //el.style.borderRadius = '12px';
     });
 }
 
