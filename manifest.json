@@ -5,7 +5,7 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "@https://github.com/dubieltomasz/silksongSpoilerBlocker.git",
+      "id": "{a1225db7-2b96-4300-875d-dbbd1b28c68d}",
       "data_collection_permissions": {
         "required": ["none"]
       }
