@@ -1,10 +1,10 @@
 const content = document.getElementById('contents') || document.body;
-const youtubeVideoClasses = "ytd-rich-item-renderer, .yt-lockup-view-model, ytd-video-renderer, ytm-shorts-lockup-view-model-v2, .ytp-videowall-still, shortsLockupViewModelHost, .ytGridShelfViewModelGridShelfItem";
+const youtubeVideoClasses = "ytd-rich-item-renderer, .yt-lockup-view-model, ytd-video-renderer, ytm-shorts-lockup-view-model-v2, .ytp-videowall-still, .shortsLockupViewModelHost, .ytGridShelfViewModelGridShelfItem";
 let blacklist = [];
 
-blacklist = JSON.parse(localStorage.getItem('blacklist'));
+blacklist = JSON.parse(JSON.parse(localStorage.getItem('blacklist')));
 if(!blacklist) {
-    blacklist = ['hollow knight', 'silksong', 'team cherry', 'hornet', 'nail', 'moss mother', 'carmelita', 'lace', 'sharpe', 'seth', 'trobbio', 'last judge', 'bell beast'];
+    blacklist = ['hollow knight', 'silksong', 'team cherry', 'hornet', 'moss mother', 'carmelita', 'lace', 'sharpe', 'seth', 'trobbio', 'last judge', 'bell beast'];
 }
 
 const callback = (mutationList) => {
@@ -41,3 +41,9 @@ const callback = (mutationList) => {
 
 const observer = new MutationObserver(callback);
 observer.observe(content, {childList: true, subtree: true});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "setBlacklist") {
+        localStorage.setItem('blacklist', JSON.stringify(request.data));
+    }
+});

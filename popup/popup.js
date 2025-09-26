@@ -1,17 +1,16 @@
 const tags = document.getElementById('tags');
-const newTag = document.getElementById('newTag');
-const remTag = document.getElementById('remTag');
+const tagInput = document.getElementById('tagInput');
 let blacklist = [];
 
 function loadBlacklist() {
     blacklist = JSON.parse(localStorage.getItem('blacklist'));
     if(!blacklist) {
-        blacklist = ['hollow knight', 'silksong', 'team cherry', 'hornet', 'nail', 'moss mother', 'carmelita', 'lace', 'sharpe', 'seth', 'trobbio', 'last judge', 'bell beast'];
+        blacklist = ['hollow knight', 'silksong', 'team cherry', 'hornet', 'moss mother', 'carmelita', 'lace', 'sharpe', 'seth', 'trobbio', 'last judge', 'bell beast'];
     }
 }
 
 function addToBlacklist() {
-    const value = newTag.value;
+    const value = tagInput.value;
     if(!value) {
         return;
     }
@@ -19,10 +18,11 @@ function addToBlacklist() {
     blacklist.push(value.toLowerCase());
     blacklist.sort();
     localStorage.setItem('blacklist', JSON.stringify(blacklist));
+    sync();
 }
 
 function removeFromBlacklist() {
-    const value = remTag.value;
+    const value = tagInput.value;
     if(!value) {
         return;
     }
@@ -34,6 +34,18 @@ function removeFromBlacklist() {
 
     blacklist.splice(index, 1);
     localStorage.setItem('blacklist', JSON.stringify(blacklist));
+    sync();
+}
+
+function removeSelfFromBlacklist(tag) {
+    const index = blacklist.indexOf(tag);
+    if(index === -1) {
+        return;
+    }
+
+    blacklist.splice(index, 1);
+    localStorage.setItem('blacklist', JSON.stringify(blacklist));
+    sync();
 }
 
 function showBlacklist() {
@@ -41,22 +53,31 @@ function showBlacklist() {
 
     blacklist.forEach(tag => {
         const newDiv = document.createElement('div');
+        const newForm = document.createElement('form');
+        const button = document.createElement('button');
+        newForm.classList.add('selfDelete');
+        button.classList.add('selfDelete');
         newDiv.innerHTML = tag;
+        newDiv.appendChild(newForm);
+        newForm.appendChild(button);
+        button.innerText = '❌';
+        button.title = 'Delete this tag from the list';
+        button.addEventListener("click", function() {removeSelfFromBlacklist(tag);});
         tags.appendChild(newDiv);
     });
 }
 
-function fun() {
+function sync() {
     const data = JSON.stringify(blacklist);
 
-    browser.tabs.executeScript({
-        code: `localStorage.setItem('blacklist', JSON.stringify(${data}));`
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, { action: "setBlacklist", data: data });
     });
 }
 
 document.getElementById('buttonAdd').addEventListener("click", addToBlacklist);
 document.getElementById('buttonRem').addEventListener("click", removeFromBlacklist);
-document.getElementById('buttonSend').addEventListener("click", fun);
+document.getElementById('buttonSend').addEventListener("click", sync);
 
 loadBlacklist();
 showBlacklist();

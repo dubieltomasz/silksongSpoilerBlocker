@@ -4,35 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Popup</title>
-    <style>
-        body {
-            width: 200px;
-            height: 300px;
-        }
-        section {
-            overflow-y: scroll;
-        }
-        button {
-            min-width: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form>
-        <label>Specify tag to add:</label>
-        <br>
-        <input id="newTag" type="text">
-        <button id="buttonAdd">+</button>
-    </form>
-    <form>
-        <label>Specify tag to remove:</label>
-        <br>
-        <input id="remTag" type="text">
-        <button id="buttonRem">-</button>
+    <form id="mainForm">
+        <input id="tagInput" type="text">
+        <menu>
+            <button id="buttonAdd" class="menuButton" title="Add tag to the list">➕</button>
+            <button id="buttonRem" class="menuButton" title="Remove tag from the list">➖</button>
+            <button id="buttonSend" class="menuButton" title="Synchronize list with the page">🔄️</button>
+        </menu>
     </form>
     <br>
     Filtered tags:
-    <button id="buttonSend">Sync</button>
     <br>
     <section id="tags"></section>
 </body>
