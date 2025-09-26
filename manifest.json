@@ -3,6 +3,15 @@
   "name": "Silksong spoiler blocker for youtube",
   "version": "0.5",
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@https://github.com/dubieltomasz/silksongSpoilerBlocker.git",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+
   "description": "Silksong spoiler blocker for youtube is an extension, that blocks video thumbnails and titles from potentially spoiling you the indie title Hollow Knight: Silksong.\nIt works by scanning video titles on currently opened youtube page and checking whether they contain some keywords from the blacklist.\nThis extension **DOES NOT** stop you from opening these videos, watching already opened videos or shorts and does not prevent you from previouing video by hovering your cursor over a video.",
   "developer": {
     "name": "Tomasz Dubiel",

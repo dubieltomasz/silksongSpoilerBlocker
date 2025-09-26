@@ -57,7 +57,7 @@ function showBlacklist() {
         const button = document.createElement('button');
         newForm.classList.add('selfDelete');
         button.classList.add('selfDelete');
-        newDiv.innerHTML = tag;
+        newDiv.appendChild(document.createTextNode(tag));
         newDiv.appendChild(newForm);
         newForm.appendChild(button);
         button.innerText = '❌';
